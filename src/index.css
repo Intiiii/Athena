@@ -1,0 +1,710 @@
+:root {
+  --duo-green: #58cc02;
+  --duo-dark-green: #3caa3c;
+  --duo-grey: #e5e5e5;
+  --duo-text: #2d2d2d;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell;
+  margin: 0;
+  background: white;
+  color: var(--duo-text);
+}
+
+.app {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 1rem;
+}
+
+.skill-tree {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.skill-trees-grid .skill-tree {
+  margin-bottom: 0;
+}
+
+.skill-trees-grid .header {
+  margin-bottom: 1rem;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.header-stats {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.add-section-button {
+  display: none;
+}
+
+.editing .add-section-button {
+  display: block;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 0.75rem 1.5rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.xp-counter, .streak-counter {
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  border-radius: 20px;
+  background: var(--duo-green);
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.streak-counter {
+  background: #ffd700;
+  color: #2d2d2d;
+}
+
+/* Section Styling */
+.section {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--duo-text);
+  font-weight: 600;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 10px;
+  margin-left: auto;
+  background: var(--duo-grey);
+  border-radius: 5px;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--duo-green);
+  border-radius: 5px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-bar::after {
+  content: attr(data-progress);
+  position: absolute;
+  right: -45px;
+  top: -3px;
+  font-size: 0.9rem;
+  color: var(--duo-text);
+}
+
+/* Chapter Styles */
+.chapter {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.chapter-title {
+  color: var(--duo-dark-green);
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Progress Indicator */
+.progress-indicator {
+  background: #f5f5f5;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #666;
+  margin-left: auto;
+}
+
+/* Activity Styles */
+.activities-list {
+  margin-top: 1.5rem;
+}
+
+.activity-item {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #eee;
+  transition: all 0.2s;
+}
+
+.activity-item.completed {
+  background: #f0f7f0;
+  border-color: #4CAF50;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.activity-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.activity-xp {
+  background: #4CAF50;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.activity-description {
+  color: #666;
+  line-height: 1.5;
+  margin: 1rem 0;
+}
+
+/* Updated Lesson Styles */
+.lesson {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.lesson.locked {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.lesson-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--duo-green);
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  position: relative;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.xp-badge {
+  position: absolute;
+  bottom: -8px;
+  right: -15px;
+  background: #4CAF50;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.xp-label {
+  opacity: 0.9;
+}
+
+/* Path Lines */
+.path-line {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  height: 35px;
+  width: 3px;
+  background: var(--duo-grey);
+  transform: translateX(-50%);
+}
+
+.lesson.completed + .path-line {
+  background: var(--duo-green);
+}
+
+/* Hover Effects */
+.lesson:not(.locked):hover .lesson-circle {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(88, 204, 2, 0.25);
+}
+
+/* Skill Trees Container */
+.skill-trees-container {
+  position: relative;
+  padding: 2rem;
+}
+
+.skill-trees-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.course-overview-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  border-left: 4px solid #4CAF50;
+}
+
+.course-overview-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.course-overview-card .course-title {
+  color: #4CAF50;
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+}
+
+.course-stats {
+  margin-top: auto;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-row .xp,
+.stat-row .streak {
+  font-weight: bold;
+  color: #666;
+}
+
+.progress {
+  text-align: right;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Remove course type specific styles */
+.template-buttons,
+[data-type] {
+  display: none;
+}
+
+.add-tree-button {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  padding: 0.75rem 1.5rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
+}
+
+.add-tree-button:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tree-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.tree-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  margin: 2rem auto;
+  position: relative;
+}
+
+.tree-form input,
+.tree-form textarea {
+  margin-bottom: 1rem;
+}
+
+.tree-form button {
+  margin: 0.5rem;
+}
+
+.form-chapter,
+.form-lesson {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.course-name-input {
+  font-size: 1.2rem;
+  padding: 0.75rem !important;
+  margin-bottom: 1rem !important;
+  border: 2px solid #4CAF50 !important;
+}
+
+
+.course-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.course-header button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.course-header .back-button {
+  background: #f5f5f5;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.course-header .back-button:hover {
+  background: #e5e5e5;
+}
+
+.course-header .edit-button {
+  background: #4CAF50;
+  color: white;
+}
+
+.course-header .edit-button:hover {
+  background: #45a049;
+}
+
+.selected-course {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .skill-tree {
+    padding: 10px;
+  }
+  
+  .header {
+    padding: 10px;
+  }
+  
+  .section {
+    padding: 1rem;
+  }
+  
+  .lesson-circle {
+    width: 45px;
+    height: 45px;
+    font-size: 0.8rem;
+  }
+  
+  .xp-badge {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+  }
+}
+
+/* Lesson Detail Modal */
+.lesson-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.lesson-detail-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.lesson-info {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.lesson-description {
+  margin-top: 1rem;
+}
+
+.complete-button {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.complete-button:hover {
+  background-color: #45a049;
+}
+
+/* Tree Form Styles */
+.tree-form {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #666;
+}
+
+.form-section, .form-chapter, .form-lesson {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.form-chapter {
+  background: #f9f9f9;
+}
+
+.form-lesson {
+  background: white;
+  margin: 1rem 0;
+  margin-left: 1rem;
+  padding-left: 1rem;
+  border-left: 2px solid #eee;
+}
+
+.form-activity {
+  background: #f9f9f9;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.activity-header h5 {
+  margin: 0;
+  color: #666;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: #ff4444;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+.xp-input {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.xp-input label {
+  min-width: 140px;
+  color: #666;
+}
+
+.xp-input input {
+  width: 100px !important;
+  margin: 0 !important;
+}
+
+.tree-form input, .tree-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tree-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.tree-form button {
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tree-form button[type="button"] {
+  background: #2196F3;
+}
+
+.tree-form button:hover {
+  opacity: 0.9;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.cancel-button {
+  background: #f5f5f5 !important;
+  color: #666 !important;
+}
+
+.save-button {
+  background: #4CAF50 !important;
+  color: white !important;
+}
+
+.add-activity-button {
+  margin-left: 1rem !important;
+}
+
+.form-chapter > h3,
+.form-lesson > h4 {
+  color: #333;
+  margin-bottom: 1rem;
+}
