@@ -13,9 +13,8 @@ body {
 }
 
 .app {
-  min-height: 100vh;
+  height: 100vh;
   background: #f5f5f5;
-  padding: 1rem;
 }
 
 .skill-tree {
@@ -23,9 +22,19 @@ body {
   margin: 0 auto;
   border-radius: 8px;
   padding: 1.5rem;
+  padding: 1.5rem;
   height: 100%;
 }
 
+.skill-trees-grid .skill-tree {
+  margin-bottom: 0;
+}
+
+.skill-trees-grid .header {
+  margin-bottom: 1rem;
+}
+
+/* Header */
 .skill-trees-grid .skill-tree {
   margin-bottom: 0;
 }
