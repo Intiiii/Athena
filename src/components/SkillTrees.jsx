@@ -83,10 +83,6 @@ function SkillTrees() {
 
   return (
     <div className="skill-trees-container">
-      <div className="header-container">
-        <h2>Welcome to Athena</h2>
-      </div>
-
       <button
         className="add-tree-button"
         onClick={() => setShowForm(true)}
