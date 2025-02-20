@@ -1,18 +1,16 @@
 import React from 'react';
 
 function CourseCard({ course, onSelect }) {
-	const totalLessons = course.sections.reduce((total, section) => 
-		total + section.chapters.reduce((chTotal, chapter) => 
-			chTotal + chapter.lessons.length, 0
-		), 0
+	const totalLessons = (course.sections || []).reduce((total, section) =>
+		total + (section.lessons || []).length,
+		0
 	);
 
-	const completedLessons = course.sections.reduce((total, section) => 
-		total + section.chapters.reduce((chTotal, chapter) => 
-			chTotal + chapter.lessons.filter(lesson => 
-				lesson.activities.every(activity => activity.completed)
-			).length, 0
-		), 0
+	const completedLessons = (course.sections || []).reduce((total, section) =>
+		total + (section.lessons || []).filter(lesson =>
+			(lesson.activities || []).every(activity => activity.completed)
+		).length,
+		0
 	);
 
 	return (

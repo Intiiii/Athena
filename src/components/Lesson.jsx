@@ -1,46 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Activity from './Activity';
 import LessonDetail from './LessonDetail';
 
 function Lesson({ lesson, onComplete, isLast }) {
-  const [showDetails, setShowDetails] = useState(false);
-
-  const handleClick = () => {
-    setShowDetails(true);
-  };
-
-  // Calculate total XP for the lesson from all activities
-  const totalXP = lesson.activities.reduce((sum, activity) => sum + activity.xp, 0);
-  const completedActivities = lesson.activities.filter(activity => activity.completed).length;
-
-  const isCompleted = completedActivities === lesson.activities.length && lesson.activities.length > 0;
-
   return (
-    <>
-      <div 
-        className={`lesson ${isCompleted ? 'completed' : ''} ${lesson.locked ? 'locked' : ''}`}
-        onClick={handleClick}
-      >
-        <div className="lesson-circle">
-          {isCompleted ? (
-            <span className="checkmark">✓</span>
-          ) : (
-            <span className="lesson-title">{lesson.title}</span>
-          )}
-        </div>
-        {!isLast && <div className="path-line"></div>}
-        <div className="xp-badge">
-          <span className="xp-label">XP:</span> {totalXP}
-        </div>
+    <div className="chapter">
+      <div className="chapter-header">
+        <h2>{lesson.title}</h2>
       </div>
+      <div className="lessons">
+        {lesson.activities.map((activity, index) => {
+          // Calculate if lesson is locked based on previous lesson's activities
+          const prevLesson = index > 0 ? lesson.activities[index - 1] : null;
+          const isLocked = prevLesson ?
+            (prevLesson.activities || []).some(activity => !activity.completed) :
+            false;
 
-      {showDetails && (
-        <LessonDetail 
-          lesson={lesson} 
-          onClose={() => setShowDetails(false)}
-          onComplete={onComplete}
-        />
-      )}
-    </>
+          return (
+            <Activity
+              key={activity.id}
+              activity={{
+                ...activity,
+                locked: isLocked
+              }}
+              onComplete={onComplete}
+              isLast={isLast && index === lesson.activities.length - 1}
+            />
+          );
+        })}
+      </div>
+    </div>
   );
 }
 

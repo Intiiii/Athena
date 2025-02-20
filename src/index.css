@@ -21,10 +21,8 @@ body {
 .skill-tree {
   max-width: 800px;
   margin: 0 auto;
-  background: white;
   border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 100%;
 }
 
@@ -39,7 +37,7 @@ body {
 /* Header */
 .header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between; /* Changed to space-between */
   align-items: center;
   padding: 1rem;
   background: white;
@@ -66,7 +64,7 @@ body {
   background: #4CAF50;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px; /* Increased border-radius */
   cursor: pointer;
   font-weight: bold;
   z-index: 1000;
@@ -82,11 +80,12 @@ body {
   color: white;
   font-weight: 700;
   font-size: 0.9rem;
+  height: 20px;
 }
 
 .streak-counter {
   background: #ffd700;
-  color: #2d2d2d;
+  color: white;
 }
 
 /* Section Styling */
@@ -100,6 +99,10 @@ body {
 
 .section-header {
   display: flex;
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   align-items: center;
   margin-bottom: 1.5rem;
 }
@@ -108,6 +111,19 @@ body {
   margin: 0;
   font-size: 1.4rem;
   color: var(--duo-text);
+  font-weight: 600;
+}
+
+.chapter-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.chapter-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--duo-dark-green);
   font-weight: 600;
 }
 
@@ -242,9 +258,9 @@ body {
 
 .xp-badge {
   position: absolute;
-  bottom: -8px;
-  right: -15px;
-  background: #4CAF50;
+  bottom: -10px;
+  right: 0px;
+  background: var(--duo-green);
   color: white;
   padding: 0.25rem 0.75rem;
   border-radius: 12px;
@@ -253,10 +269,6 @@ body {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-}
-
-.xp-label {
-  opacity: 0.9;
 }
 
 /* Path Lines */
@@ -304,7 +316,7 @@ body {
   min-height: 200px;
   display: flex;
   flex-direction: column;
-  border-left: 4px solid #4CAF50;
+  border-left: 6px solid var(--duo-dark-green);
 }
 
 .course-overview-card:hover {
@@ -355,7 +367,7 @@ body {
   background: #4CAF50;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px; /* Increased border-radius */
   cursor: pointer;
   font-weight: bold;
   z-index: 1000;
@@ -415,7 +427,7 @@ body {
   font-size: 1.2rem;
   padding: 0.75rem !important;
   margin-bottom: 1rem !important;
-  border: 2px solid #4CAF50 !important;
+  border: 2px solid var(--duo-dark-green) !important;
 }
 
 
@@ -430,15 +442,26 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  border-radius: 8px; /* Add this line */
 }
 
 .course-header button {
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px; /* Increased border-radius */
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+  background-color: var(--duo-green); /* Set background color */
+  color: white;
+  height: 34px; /* Match the height of the streak counter */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the icon */
+}
+
+.course-header button:hover {
+  background-color: #3caa3c;
 }
 
 .course-header .back-button {
@@ -447,6 +470,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  height: 36px;
 }
 
 .course-header .back-button:hover {
@@ -454,12 +478,14 @@ body {
 }
 
 .course-header .edit-button {
-  background: #4CAF50;
+  background: var(--duo-green);
   color: white;
+  border-radius: 20px; /* Increased border-radius */
+  height: 36px;
 }
 
 .course-header .edit-button:hover {
-  background: #45a049;
+  background-color: #3caa3c;
 }
 
 .selected-course {
@@ -493,218 +519,320 @@ body {
   }
 }
 
-/* Lesson Detail Modal */
-.lesson-detail-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
+/* TreeForm.css */
 
-.lesson-detail-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-}
-
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.lesson-info {
-  margin: 1rem 0;
-  padding: 1rem;
-  background: #f5f5f5;
-  border-radius: 4px;
-}
-
-.lesson-description {
-  margin-top: 1rem;
-}
-
-.complete-button {
-  display: block;
-  width: 100%;
-  padding: 1rem;
-  margin-top: 1.5rem;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  transition: background-color 0.2s;
-}
-
-.complete-button:hover {
-  background-color: #45a049;
-}
-
-/* Tree Form Styles */
 .tree-form {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: white;
+  background: #fff;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  position: relative;
 }
 
 .form-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
+  margin-bottom: 20px;
   border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
 }
 
-.close-button {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  color: #666;
+.form-header h2 {
+  color: var(--duo-dark-green);
+  margin: 0;
+  font-size: 1.75em;
 }
 
-.form-section, .form-chapter, .form-lesson {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  border: 1px solid #eee;
+.form-section {
+  margin-bottom: 20px;
+}
+
+.form-section input[type="text"],
+.form-section textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
   border-radius: 4px;
+  font-size: 1em;
+  color: #333;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
 }
 
 .form-chapter {
   background: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+}
+
+.form-chapter h3 {
+  color: var(--duo-dark-green);
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.3em;
 }
 
 .form-lesson {
-  background: white;
-  margin: 1rem 0;
-  margin-left: 1rem;
-  padding-left: 1rem;
-  border-left: 2px solid #eee;
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #f1f1f1;
+  border-radius: 4px;
+}
+
+.form-lesson h4 {
+  color: #555;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.activities-container {
+  margin-top: 10px;
+}
+
+.activities-container h5 {
+  color: #777;
+  margin-bottom: 10px;
+  font-size: 1em;
 }
 
 .form-activity {
   background: #f9f9f9;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid #eee;
-}
-
-.activity-header {
+  border-radius: 4px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+  flex-direction: column;
 }
 
-.activity-header h5 {
-  margin: 0;
-  color: #666;
-}
-
-.delete-button {
-  background: none;
-  border: none;
-  color: #ff4444;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0.25rem 0.5rem;
+.form-activity input[type="text"],
+.form-activity textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #444;
+  box-sizing: border-box;
 }
 
 .xp-input {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin: 1rem 0;
+  margin-bottom: 8px;
 }
 
 .xp-input label {
-  min-width: 140px;
+  margin-right: 10px;
   color: #666;
+  font-size: 0.9em;
 }
 
-.xp-input input {
-  width: 100px !important;
-  margin: 0 !important;
-}
-
-.tree-form input, .tree-form textarea {
-  width: 100%;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
+.xp-input input[type="number"] {
+  width: 60px;
+  padding: 6px;
   border: 1px solid #ddd;
   border-radius: 4px;
-}
-
-.tree-form textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.tree-form button {
-  padding: 0.5rem 1rem;
-  margin: 0.5rem;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.tree-form button[type="button"] {
-  background: #2196F3;
-}
-
-.tree-form button:hover {
-  opacity: 0.9;
+  font-size: 0.9em;
+  color: #444;
 }
 
 .form-buttons {
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
+  margin-top: 20px;
 }
 
-.cancel-button {
-  background: #f5f5f5 !important;
-  color: #666 !important;
+.form-buttons button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.save-button {
-  background: #4CAF50 !important;
-  color: white !important;
+.form-buttons .cancel-button {
+  background-color: #f44336;
+  color: white;
+  margin-right: 10px;
 }
 
+.form-buttons .cancel-button:hover {
+  background-color: #da190b;
+}
+
+.form-buttons .save-button {
+  background-color: var(--duo-dark-green);
+  color: white;
+}
+
+.form-buttons .save-button:hover {
+  background-color: var(--duo-dark-green);
+}
+
+.add-chapter-button,
+.add-lesson-button,
 .add-activity-button {
-  margin-left: 1rem !important;
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+  margin-top: 5px;
 }
 
-.form-chapter > h3,
-.form-lesson > h4 {
+.add-chapter-button:hover,
+.add-lesson-button:hover,
+.add-activity-button:hover {
+  background-color: #45a049;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #da190b;
+}
+
+/* General Input Styles */
+input[type="text"],
+input[type="number"],
+textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
   color: #333;
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+textarea {
+  resize: vertical; /* Allows vertical resizing */
+  min-height: 100px;
+}
+
+/* Ensure consistent styling for labels */
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-size: 0.9em;
+}
+
+/* Close Button Style */
+.close-button {
+  background-color: #aaa;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.close-button:hover {
+  background-color: #888;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tree-form {
+    padding: 15px;
+  }
+
+  .form-header h2 {
+    font-size: 1.5em;
+  }
+
+  .form-section input[type="text"],
+  .form-section textarea {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+
+  .form-chapter,
+  .form-lesson {
+    padding: 10px;
+  }
+
+  .form-chapter h3 {
+    font-size: 1.2em;
+  }
+
+  .form-lesson h4 {
+    font-size: 1em;
+  }
+
+  .activities-container h5 {
+    font-size: 0.9em;
+  }
+
+  .form-activity input[type="text"],
+  .form-activity textarea {
+    padding: 6px;
+    font-size: 0.8em;
+  }
+
+  .xp-input label {
+    font-size: 0.8em;
+  }
+
+  .xp-input input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    font-size: 0.8em;
+  }
+
+  .form-buttons button {
+    padding: 8px 12px;
+    font-size: 0.9em;
+  }
+
+  .add-chapter-button,
+  .add-lesson-button,
+  .add-activity-button {
+    padding: 6px 10px;
+    font-size: 0.8em;
+  }
+
+  .delete-button {
+    width: 22px;
+    height: 22px;
+    font-size: 0.8em;
+  }
 }

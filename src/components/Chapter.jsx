@@ -1,27 +1,30 @@
 import React from 'react';
-import Lesson from './Lesson';
+import Activity from './Activity';
+import LessonDetail from './LessonDetail';
 
-function Chapter({ chapter, onComplete, isLast }) {
+function Lesson({ lesson, onComplete, isLast }) {
   return (
     <div className="chapter">
-      <h3 className="chapter-title">{chapter.title}</h3>
+      <div className="chapter-header">
+        <h2>{lesson.title}</h2>
+      </div>
       <div className="lessons">
-        {chapter.lessons.map((lesson, index) => {
+        {lesson.activities.map((activity, index) => {
           // Calculate if lesson is locked based on previous lesson's activities
-          const prevLesson = index > 0 ? chapter.lessons[index - 1] : null;
-          const isLocked = prevLesson ? 
-            prevLesson.activities.some(activity => !activity.completed) : 
+          const prevLesson = index > 0 ? lesson.activities[index - 1] : null;
+          const isLocked = prevLesson ?
+            (prevLesson.activities || []).some(activity => !activity.completed) :
             false;
 
           return (
-            <Lesson
-              key={lesson.id}
-              lesson={{
-                ...lesson,
+            <Activity
+              key={activity.id}
+              activity={{
+                ...activity,
                 locked: isLocked
               }}
               onComplete={onComplete}
-              isLast={isLast && index === chapter.lessons.length - 1}
+              isLast={isLast && index === lesson.activities.length - 1}
             />
           );
         })}
@@ -30,5 +33,4 @@ function Chapter({ chapter, onComplete, isLast }) {
   );
 }
 
-export default Chapter;
-
+export default Lesson;

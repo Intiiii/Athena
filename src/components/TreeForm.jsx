@@ -5,15 +5,12 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 		name: '',
 		section: {
 			title: '',
-			chapters: [{
+			lessons: [{
 				title: '',
-				lessons: [{
+				activities: [{
 					title: '',
-					activities: [{
-						title: '',
-						xp: 10,
-						description: ''
-					}]
+					xp: 10,
+					description: ''
 				}]
 			}]
 		}
@@ -35,7 +32,7 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 		if (initialData) {
 			setCourse({
 				name: initialData.name,
-				section: initialData.sections[0]
+				section: initialData.sections?.[0] || { title: '', lessons: [] } // Handle potential undefined sections
 			});
 		}
 	}, [initialData]);
@@ -46,9 +43,9 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 			...course,
 			section: {
 				...course.section,
-				chapters: [...course.section.chapters, {
+				lessons: [...course.section.lessons, {
 					title: '',
-					lessons: [{
+					activities: [{
 						title: '',
 						xp: 10,
 						description: ''
@@ -59,27 +56,8 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 	};
 
 	const addLesson = (chapterIndex) => {
-		const newChapters = [...course.section.chapters];
-		newChapters[chapterIndex].lessons.push({
-			title: '',
-			activities: [{
-				title: '',
-				xp: 10,
-				description: ''
-			}]
-		});
-		setCourse({
-			...course,
-			section: {
-				...course.section,
-				chapters: newChapters
-			}
-		});
-	};
-
-	const addActivity = (chapterIndex, lessonIndex) => {
-		const newChapters = [...course.section.chapters];
-		newChapters[chapterIndex].lessons[lessonIndex].activities.push({
+		const newChapters = [...course.section.lessons];
+		newChapters[chapterIndex].activities.push({
 			title: '',
 			xp: 10,
 			description: ''
@@ -88,16 +66,32 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 			...course,
 			section: {
 				...course.section,
-				chapters: newChapters
+				lessons: newChapters
+			}
+		});
+	};
+
+	const addActivity = (chapterIndex, lessonIndex) => {
+		const newChapters = [...course.section.lessons];
+		newChapters[chapterIndex].activities[lessonIndex].activities.push({
+			title: '',
+			xp: 10,
+			description: ''
+		});
+		setCourse({
+			...course,
+			section: {
+				...course.section,
+				lessons: newChapters
 			}
 		});
 	};
 
 	const deleteActivity = (chapterIndex, lessonIndex, activityIndex) => {
-		const newChapters = [...course.section.chapters];
-		newChapters[chapterIndex].lessons[lessonIndex].activities.splice(activityIndex, 1);
-		if (newChapters[chapterIndex].lessons[lessonIndex].activities.length === 0) {
-			newChapters[chapterIndex].lessons[lessonIndex].activities.push({
+		const newChapters = [...course.section.lessons];
+		newChapters[chapterIndex].activities[lessonIndex].activities.splice(activityIndex, 1);
+		if (newChapters[chapterIndex].activities[lessonIndex].activities.length === 0) {
+			newChapters[chapterIndex].activities[lessonIndex].activities.push({
 				title: '',
 				xp: 10,
 				description: ''
@@ -107,7 +101,7 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 			...course,
 			section: {
 				...course.section,
-				chapters: newChapters
+				lessons: newChapters
 			}
 		});
 	};
@@ -119,25 +113,25 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 	};
 
 	const updateChapter = (index, value) => {
-		const newChapters = [...course.section.chapters];
+		const newChapters = [...course.section.lessons];
 		newChapters[index].title = value;
 		setCourse({
 			...course,
 			section: {
 				...course.section,
-				chapters: newChapters
+				lessons: newChapters
 			}
 		});
 	};
 
 	const updateLesson = (chapterIndex, lessonIndex, field, value) => {
-		const newChapters = [...course.section.chapters];
-		newChapters[chapterIndex].lessons[lessonIndex][field] = value;
+		const newChapters = [...course.section.lessons];
+		newChapters[chapterIndex].activities[lessonIndex][field] = value;
 		setCourse({
 			...course,
 			section: {
 				...course.section,
-				chapters: newChapters
+				lessons: newChapters
 			}
 		});
 	};
@@ -147,14 +141,13 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 		const newSection = {
 			...course.section,
 			id: course.section.id || 'section-' + Date.now(),
-			chapters: course.section.chapters.map((chapter, i) => ({
-				...chapter,
-				id: chapter.id || `chapter-${i}-${Date.now()}`,
-				lessons: chapter.lessons.map((lesson, j) => ({
-					...lesson,
-					id: lesson.id || `lesson-${i}-${j}-${Date.now()}`,
-					completed: lesson.completed || false,
-					locked: lesson.locked !== undefined ? lesson.locked : j !== 0
+			lessons: course.section.lessons.map((lesson, i) => ({
+				...lesson,
+				id: lesson.id || `lesson-${i}-${Date.now()}`,
+				activities: lesson.activities.map((activity, j) => ({
+					...activity,
+					id: activity.id || `activity-${i}-${j}-${Date.now()}`,
+					completed: activity.completed || false,
 				}))
 			}))
 		};
@@ -197,27 +190,27 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 							/>
 						</div>
 
-						{course.section.chapters.map((chapter, chapterIndex) => (
-							<div key={chapter.id || chapterIndex} className="form-chapter">
-								<h3>Chapter {chapterIndex + 1}</h3>
+						{course.section.lessons?.map((lesson, chapterIndex) => (
+							<div key={lesson.id || chapterIndex} className="form-chapter">
+								<h3>Lesson {chapterIndex + 1}</h3>
 								<input
 									type="text"
-									placeholder="Chapter Title"
-									value={chapter.title}
+									placeholder="Lesson Title"
+									value={lesson.title}
 									onChange={(e) => updateChapter(chapterIndex, e.target.value)}
 									required
 								/>
 
-								{chapter.lessons.map((lesson, lessonIndex) => (
-									<div key={lesson.id || lessonIndex} className="form-lesson">
-										<h4>Lesson {lessonIndex + 1}</h4>
+								{lesson.activities?.map((activity, lessonIndex) => (
+									<div key={activity.id || lessonIndex} className="form-lesson">
+										<h4>Activity {lessonIndex + 1}</h4>
 										<input
 											type="text"
-											placeholder="Lesson Title"
-											value={lesson.title}
+											placeholder="Activity Title"
+											value={activity.title}
 											onChange={(e) => {
-												const newChapters = [...course.section.chapters];
-												newChapters[chapterIndex].lessons[lessonIndex].title = e.target.value;
+												const newChapters = [...course.section.lessons];
+												newChapters[chapterIndex].activities[lessonIndex].title = e.target.value;
 												setCourse({
 													...course,
 													section: { ...course.section, chapters: newChapters }
@@ -225,72 +218,13 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 											}}
 											required
 										/>
-
-										<div className="activities-container">
-											<h5>Activities</h5>
-											{lesson.activities.map((activity, activityIndex) => (
-												<div key={activityIndex} className="form-activity">
-													<div className="activity-header">
-														<input
-															type="text"
-															placeholder="Activity Title"
-															value={activity.title}
-															onChange={(e) => {
-																const newChapters = [...course.section.chapters];
-																newChapters[chapterIndex].lessons[lessonIndex].activities[activityIndex].title = e.target.value;
-																setCourse({
-																	...course,
-																	section: { ...course.section, chapters: newChapters }
-																});
-															}}
-															required
-														/>
-														<button
-															type="button"
-															className="delete-button"
-															onClick={() => deleteActivity(chapterIndex, lessonIndex, activityIndex)}
-														>
-															×
-														</button>
-													</div>
-													<div className="xp-input">
-														<label>XP:</label>
-														<input
-															type="number"
-															value={activity.xp}
-															onChange={(e) => {
-																const newChapters = [...course.section.chapters];
-																newChapters[chapterIndex].lessons[lessonIndex].activities[activityIndex].xp = parseInt(e.target.value);
-																setCourse({
-																	...course,
-																	section: { ...course.section, chapters: newChapters }
-																});
-															}}
-															required
-														/>
-													</div>
-													<textarea
-														placeholder="Activity Description (optional)"
-														value={activity.description}
-														onChange={(e) => {
-															const newChapters = [...course.section.chapters];
-															newChapters[chapterIndex].lessons[lessonIndex].activities[activityIndex].description = e.target.value;
-															setCourse({
-																...course,
-																section: { ...course.section, chapters: newChapters }
-															});
-														}}
-													/>
-												</div>
-											))}
-											<button
-												type="button"
-												className="add-activity-button"
-												onClick={() => addActivity(chapterIndex, lessonIndex)}
-											>
-												Add Activity
-											</button>
-										</div>
+										<button
+											type="button"
+											className="delete-button"
+											onClick={() => deleteActivity(chapterIndex, lessonIndex, activityIndex)}
+										>
+											×
+										</button>
 									</div>
 								))}
 								<button
@@ -298,13 +232,13 @@ function TreeForm({ onSubmit, initialData, onClose }) {
 									className="add-lesson-button"
 									onClick={() => addLesson(chapterIndex)}
 								>
-									Add Lesson
+									Add Activity
 								</button>
 							</div>
 						))}
 
 						<button type="button" onClick={addChapter} className="add-chapter-button">
-						  Add Chapter
+						  Add Lesson
 						</button>
 
 						<div className="form-buttons">

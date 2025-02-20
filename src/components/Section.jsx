@@ -1,26 +1,23 @@
 import React from 'react';
-import Chapter from './Chapter';
+import Lesson from './Lesson';
 
 function Section({ section, onComplete, progress }) {
   return (
-    <div className="section">
-      <div className="section-header">
+    <><div className="section-header">
         <h2>{section.title}</h2>
         <div className="progress-indicator">
-            {progress}% complete
+          {progress}% complete
         </div>
       </div>
-      <div className="chapters">
-        {section.chapters.map((chapter, index) => (
-          <Chapter
-            key={chapter.id}
-            chapter={chapter}
-            onComplete={onComplete}
-            isLast={index === section.chapters.length - 1}
-          />
+    <div className="lessons">
+      {section.lessons.map((lesson, index) => (
+        <Lesson
+          key={lesson.id}
+          lesson={lesson}
+          onComplete={onComplete}
+          isLast={index === section.lessons.length - 1} />
         ))}
-      </div>
-    </div>
+    </div></>
   );
 }
 
